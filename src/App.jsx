@@ -3,10 +3,11 @@ import "./App.css";
 import Catalog from "./pages/Catalog";
 import AboutItem from "./pages/AboutItem";
 import { useState } from "react";
-
+import { CeshHrefContext } from "./Context/CeshHrefContext";
 function App() {
   const [cesh, setCesh] = useState(new Map());
   const [itemHref, setItemHref] = useState("");
+
   return (
     <>
       <header className="flex justify-center items-center h-20 bg-gray-100 shadow-md">
@@ -17,19 +18,20 @@ function App() {
           Home
         </Link>
       </header>
-      <Routes>
-        <Route
-          path="/"
-          element={
-            <Catalog changeItem={setItemHref} cesh={cesh} setCesh={setCesh} />
-          }
-        />
-        <Route
-          path="/item"
-          element={<AboutItem href={itemHref} cesh={cesh} setCesh={setCesh} />}
-        />
-        <Route />
-      </Routes>
+      <CeshHrefContext.Provider
+        value={{
+          cesh: cesh,
+          setCesh: setCesh,
+          itemHref: itemHref,
+          setItemHref: setItemHref,
+        }}
+      >
+        <Routes>
+          <Route path="/" element={<Catalog />} />
+          <Route path="/item" element={<AboutItem />} />
+          <Route />
+        </Routes>
+      </CeshHrefContext.Provider>
     </>
   );
 }

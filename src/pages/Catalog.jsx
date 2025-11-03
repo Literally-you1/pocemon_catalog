@@ -1,53 +1,53 @@
 import { useEffect, useState } from "react";
 import MyFilter from "../components/my_filter/MyFilter";
 import ProductList from "../components/product_list/ProductList";
-import useGetData from "../hooks/useGateData";
 import PagintionBar from "../components/pagination_bar/PaginationBar";
+import Loader from "../components/loader/Loader";
+import { useGetPokemonsQuery } from "../api/pokemonApi";
 
-const mainHref = " https://pokeapi.co/api/v2/ability/";
 const itemLimit = 20;
 
-function Catalog({ changeItem, cesh, setCesh }) {
-  const [serverData, setServerData] = useState(null);
-  const [href, setHref] = useState(mainHref);
-  const [filterData, setFilterData] = useState(null);
-  const [page, setPage] = useState(1);
-
-  const dataForFilter = useGetData(mainHref + "?limit=400", cesh, setCesh);
-  const data = useGetData(href + "?limit=400", cesh, setCesh);
-
+function Catalog() {
+  const [offset, setOffset] = useState(0);
+  const [urlName, setUrlName] = useState("item");
+  const [urlItemName, setUrlItemName] = useState("");
+  const [renderObj, setrenderObj] = useState({});
+  console.log(urlItemName);
+  console.log(urlName);
+  const { data: items, isLoading: isItemsLoading } = useGetPokemonsQuery({
+    limit: itemLimit,
+    offset: +offset,
+    nameUrl: urlName,
+    name: urlItemName,
+  });
+  console.log(items);
   useEffect(() => {
-    if (data != null) {
-      setServerData(data.results);
+    if (items) {
+      setRenderObj(items, setrenderObj);
     }
-    if (dataForFilter != null) {
-      setFilterData({
-        arr: dataForFilter.results,
-        arrOrig: dataForFilter.results,
-        isFilter: false,
-      });
-    }
-  }, [data, dataForFilter]);
+  }, [items]);
 
+  console.log(renderObj);
   return (
     <div>
-      {filterData === null || data === null ? (
-        "loading..."
+      {isItemsLoading || !items ? (
+        <Loader />
       ) : (
         <>
-          <MyFilter changeDataArr={setFilterData} />
+          <MyFilter
+            changeNameUrl={setUrlName}
+            cahngeNmaeTypeUrl={setUrlItemName}
+          />
           <ProductList
-            serverData={serverData.slice(0, itemLimit)}
-            changeHrefItem={changeItem}
+            serverData={{ data: renderObj }}
+            offset={offset}
+            limit={itemLimit}
           />
           <PagintionBar
-            totalCard={data.count}
+            totalCard={renderObj.count}
+            offset={offset}
+            setpage={setOffset}
             limit={itemLimit}
-            currentPage={page}
-            onChangePage={setHref}
-            setpage={setPage}
-            filterArr={filterData}
-            changePageArr={setServerData}
           />
         </>
       )}
@@ -55,4 +55,30 @@ function Catalog({ changeItem, cesh, setCesh }) {
   );
 }
 
+function setRenderObj(dataobj, setrenderObj) {
+  if (Object.hasOwn(dataobj, "pokemon")) {
+    let pokemonArr = [];
+    dataobj.pokemon.map((elem) => {
+      pokemonArr.push(elem.pokemon);
+    });
+    setrenderObj({
+      results: pokemonArr,
+      count: +pokemonArr.length,
+    });
+
+    return;
+  }
+  if (Object.hasOwn(dataobj, "items")) {
+    setrenderObj({
+      results: dataobj.items,
+      count: +dataobj.items.length,
+    });
+
+    return;
+  }
+  setrenderObj({
+    results: dataobj.results,
+    count: dataobj.count,
+  });
+}
 export default Catalog;

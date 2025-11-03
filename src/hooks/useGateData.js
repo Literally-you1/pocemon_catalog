@@ -14,6 +14,6 @@ export default function useGetData(url, memo, setmemmo) {
           });
         });
     }
-  }, [url, setmemmo]);
+  }, [url, setmemmo, memo]);
   return memo.get(url) || null;
 }
