@@ -8,7 +8,7 @@ import {
 } from "../../api/pokemonApi";
 import Loader from "../loader/Loader";
 
-function MyFilter({ changeNameUrl, cahngeNmaeTypeUrl }) {
+function MyFilter({ changeNameUrl, cahngeNmaeTypeUrl, setOffset }) {
   const [inputValue, setInputValue] = useState("");
   const [sortValue, setSortValue] = useState("");
 
@@ -95,6 +95,7 @@ function MyFilter({ changeNameUrl, cahngeNmaeTypeUrl }) {
     if (type == "def") {
       cahngeNmaeTypeUrl("");
       changeNameUrl("item");
+      setOffset(0);
       return;
     }
     cahngeNmaeTypeUrl(type);

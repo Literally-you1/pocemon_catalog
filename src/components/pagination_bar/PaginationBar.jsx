@@ -58,7 +58,6 @@ function PagintionBar({ totalCard, offset, setpage, limit }) {
 function createPageArr(currentPage, totalPages) {
   const pageArr = [];
 
-  // Якщо всього сторінок мало — показуємо всі
   if (totalPages <= 10) {
     for (let i = 1; i <= totalPages; i++) {
       pageArr.push(i);
@@ -66,15 +65,13 @@ function createPageArr(currentPage, totalPages) {
     return pageArr;
   }
 
-  const leftCount = 3; // перші 3 сторінки
-  const rightCount = 3; // останні 3 сторінки
+  const leftCount = 3;
+  const rightCount = 3;
 
-  // --- Лівий блок ---
   for (let i = 1; i <= leftCount; i++) {
     pageArr.push(i);
   }
 
-  // --- Середні сторінки ---
   if (currentPage > leftCount + 1) {
     pageArr.push("...");
     const start = Math.max(leftCount + 1, currentPage - 1);
@@ -91,7 +88,6 @@ function createPageArr(currentPage, totalPages) {
     }
   }
 
-  // --- Правий блок ---
   if (currentPage < totalPages - rightCount) {
     if (pageArr[pageArr.length - 1] < totalPages - rightCount) {
       pageArr.push("...");

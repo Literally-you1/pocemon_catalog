@@ -14,12 +14,15 @@ function Catalog() {
   const [renderObj, setrenderObj] = useState({});
   console.log(urlItemName);
   console.log(urlName);
-  const { data: items, isLoading: isItemsLoading } = useGetPokemonsQuery({
-    limit: itemLimit,
-    offset: +offset,
-    nameUrl: urlName,
-    name: urlItemName,
-  });
+  const { data: items, isLoading: isItemsLoading } = useGetPokemonsQuery(
+    {
+      limit: itemLimit,
+      offset: +offset,
+      nameUrl: urlName,
+      name: urlItemName,
+    },
+    { refetchOnMountOrArgChange: true }
+  );
   console.log(items);
   useEffect(() => {
     if (items) {
@@ -37,6 +40,7 @@ function Catalog() {
           <MyFilter
             changeNameUrl={setUrlName}
             cahngeNmaeTypeUrl={setUrlItemName}
+            setOffset={setOffset}
           />
           <ProductList
             serverData={{ data: renderObj }}
