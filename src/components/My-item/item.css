@@ -1,0 +1,23 @@
+img{
+    width: 50px;
+    height: 50px;
+}
+.list_checkbox {
+  appearance: none;
+  width: 18px;
+  height: 18px;
+  border: 2px solid #ccc;
+  background: #fff;
+  cursor: pointer;
+  position: relative;
+  border-radius: 4px; /* опціонально — зробить кути красивішими */
+}
+
+.list_checkbox:checked {
+  border-color: transparent;
+  background: radial-gradient(circle, #81e47e 50%, rgb(236, 225, 175) 51%);
+}
+
+.crossed_out{
+    text-decoration: line-through;
+}

@@ -1,1 +1,19 @@
 @import "tailwindcss";
+
+
+.to_do-enter {
+    opacity: 0;
+  transform: translateY(-100%);
+}
+.to_do-enter-active {
+    opacity: 1;
+ transform: translateY(0%);
+}
+.to_do-exit {
+    transition: 1s;
+ transform: translatex(0%);
+}
+.to_do-exit-active {
+    opacity: 0;
+   transform: translatex(-200%);
+}

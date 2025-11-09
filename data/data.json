@@ -1,0 +1,62 @@
+[
+  {
+    "id": 1,
+    "name": "Fix login bug",
+    "description": "Resolve issue with incorrect password validation on the login page.",
+    "createdAt": "2025-10-13T10:30:00Z"
+  },
+  {
+    "id": 2,
+    "name": "Add search filter",
+    "description": "Implement category and date filters for the task search feature.",
+    "createdAt": "2025-10-12T15:45:00Z"
+  },
+  {
+    "id": 3,
+    "name": "Update user profile UI",
+    "description": "Redesign the user profile layout for better mobile experience.",
+    "createdAt": "2025-10-11T09:10:00Z"
+  },
+  {
+    "id": 4,
+    "name": "Optimize image loading",
+    "description": "Use lazy loading to improve page performance and reduce bandwidth.",
+    "createdAt": "2025-10-10T18:22:00Z"
+  },
+  {
+    "id": 5,
+    "name": "Write unit tests",
+    "description": "Add Jest tests for the authentication and API service modules.",
+    "createdAt": "2025-10-09T13:00:00Z"
+  },
+  {
+    "id": 6,
+    "name": "Implement dark mode",
+    "description": "Allow users to switch between light and dark themes in settings.",
+    "createdAt": "2025-10-08T20:05:00Z"
+  },
+  {
+    "id": 7,
+    "name": "Fix navigation menu",
+    "description": "Correct alignment and dropdown issues in the navbar on smaller screens.",
+    "createdAt": "2025-10-07T07:30:00Z"
+  },
+  {
+    "id": 8,
+    "name": "Add notifications",
+    "description": "Implement push notification system for task updates and messages.",
+    "createdAt": "2025-10-06T16:12:00Z"
+  },
+  {
+    "id": 9,
+    "name": "Refactor API calls",
+    "description": "Move all fetch requests into a centralized API utility file.",
+    "createdAt": "2025-10-05T12:45:00Z"
+  },
+  {
+    "id": 10,
+    "name": "Create onboarding flow",
+    "description": "Design and code a step-by-step onboarding guide for new users.",
+    "createdAt": "2025-10-04T08:55:00Z"
+  }
+]

@@ -1,39 +1,63 @@
-import { Link, Route, Routes } from "react-router-dom";
+import SearchInput from "./components/My-SearchInput/searchInput.jsx";
+import { useEffect, useMemo, useState, createContext } from "react";
 import "./App.css";
-import Catalog from "./pages/Catalog";
-import AboutItem from "./pages/AboutItem";
-import { useState } from "react";
-import { CeshHrefContext } from "./Context/CeshHrefContext";
+import Item from "./components/My-item/item.jsx";
+import Mymodal from "./components/My-modal/mymodal.jsx";
+
+const ListToDoContext = createContext(null);
+
 function App() {
-  const [cesh, setCesh] = useState(new Map());
-  const [itemHref, setItemHref] = useState("");
+  const [data, setData] = useState(null);
+  const [inputState, setInput] = useState("");
+  const [filterData, setFilterData] = useState([]);
+
+  useEffect(() => {
+    fetch("../data/data.json")
+      .then((res) => res.json())
+      .then((body) => setData(body))
+      .catch((error) => console.error(error));
+  }, []);
+  useMemo(() => {
+    if (!data) return [];
+    if (inputState.trim() === "") setFilterData(data);
+
+    setFilterData(
+      data.filter(
+        (item) =>
+          item.name.toLowerCase().includes(inputState.toLowerCase()) ||
+          item.description.toLowerCase().includes(inputState.toLowerCase()) ||
+          item.createdAt.toLowerCase().includes(inputState.toLowerCase())
+      )
+    );
+  }, [data, inputState]);
 
   return (
-    <>
-      <header className="flex justify-center items-center h-20 bg-gray-100 shadow-md">
-        <Link
-          to="/"
-          className="text-xl font-semibold text-gray-700 px-4 py-2 rounded hover:bg-blue-500 hover:text-white transition-colors duration-300"
-        >
-          Home
-        </Link>
-      </header>
-      <CeshHrefContext.Provider
-        value={{
-          cesh: cesh,
-          setCesh: setCesh,
-          itemHref: itemHref,
-          setItemHref: setItemHref,
-        }}
-      >
-        <Routes>
-          <Route path="/" element={<Catalog />} />
-          <Route path="/item" element={<AboutItem />} />
-          <Route />
-        </Routes>
-      </CeshHrefContext.Provider>
-    </>
+    <div className="mt-[100px] mr-auto ml-auto max-w-[80%] app flex flex-col justify-center">
+      {data === null ? (
+        <div>Loading...</div>
+      ) : (
+        <div className={`w-full flex flex-col content-center `}>
+          <ListToDoContext.Provider value={{ arr: data, changeData: setData }}>
+            <Mymodal data={data} changeData={setData}></Mymodal>
+            <SearchInput value={inputState} setvalue={setInput} />
+            <div className="mt-[10px] max-w-[100%] gap-2 flex-wrap flex flex-col content-center">
+              {filterData.map((element) => {
+                return (
+                  <Item
+                    data={element}
+                    arr={data}
+                    key={element.id}
+                    changestate={setData}
+                  />
+                );
+              })}
+            </div>
+          </ListToDoContext.Provider>
+        </div>
+      )}
+    </div>
   );
 }
 
 export default App;
+export { ListToDoContext };

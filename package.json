@@ -1,5 +1,5 @@
 {
-  "name": "poco_catalog",
+  "name": "test2",
   "private": true,
   "version": "0.0.0",
   "type": "module",
@@ -10,13 +10,10 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@reduxjs/toolkit": "^2.9.2",
     "@tailwindcss/vite": "^4.1.14",
     "react": "^19.1.1",
     "react-dom": "^19.1.1",
-    "react-redux": "^9.2.0",
-    "react-router-dom": "^7.9.4",
-    "redux-persist": "^6.0.0",
+    "react-transition-group": "^4.4.5",
     "tailwindcss": "^4.1.14"
   },
   "devDependencies": {
